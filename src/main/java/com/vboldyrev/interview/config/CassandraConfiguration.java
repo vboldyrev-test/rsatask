@@ -27,14 +27,14 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
 
     @Override
     protected String getKeyspaceName() {
-        return env.getProperty("keySpace");
+        return env.getProperty("cassandra.keySpace");
     }
 
     @Bean
     public CassandraClusterFactoryBean cluster() {
         CassandraClusterFactoryBean cluster = new CassandraClusterFactoryBean();
-        cluster.setContactPoints(env.getProperty("contactPoint"));
-        cluster.setPort(Integer.valueOf(Objects.requireNonNull(env.getProperty("port"))));
+        cluster.setContactPoints(env.getProperty("cassandra.contactPoint"));
+        cluster.setPort(Integer.valueOf(Objects.requireNonNull(env.getProperty("cassandra.port"))));
         cluster.setJmxReportingEnabled(false);
         cluster.setKeyspaceCreations(getKeyspaceCreations());
         cluster.setAuthProvider(getAuthProvider());
@@ -42,8 +42,8 @@ public class CassandraConfiguration extends AbstractCassandraConfiguration {
     }
     @Override
     protected AuthProvider getAuthProvider() {
-        return new PlainTextAuthProvider(env.getProperty("username"),
-                env.getProperty("password"));
+        return new PlainTextAuthProvider(env.getProperty("cassandra.username"),
+                env.getProperty("cassandra.password"));
     }
 
     @Override
