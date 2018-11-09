@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h3>Enter a username and click Submit.</h3>
+<input type="text" id="userId" style="witdh: 300px">
+<button type="button" onclick="submitUser()">Submit</button>
+<p id="messageOutId"></p>
+
+<script>
+    function submitUser() {
+        var inputValue = document.getElementById("userId").value;
+        var url = "/users/" + inputValue + "/last_access_date";
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url, false);
+        xhttp.send();
+        var responseText = "Error.";
+        if(xhttp.status === 200) {
+            responseText = xhttp.responseText;
+            if (responseText === "") responseText += "New user: \"" + inputValue + "\" was added.";
+            else responseText = "Last user access date: " + responseText;
+        }
+        document.getElementById("messageOutId").innerHTML = responseText;
+    }
+</script>
+
+</body>
+</html>
